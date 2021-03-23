@@ -1,0 +1,92 @@
+<div class="d-flex flex-column">
+
+  <div *ngIf="!isShow" style="min-height: 100vh !important;">
+  
+    <nav class="navbar navbar-expand-lg bg-oscuro jc-normal" style="position: fixed !important; max-height:10vh !important; border-bottom: 2px solid #ce1124 !important;">
+
+      <div style="align-items: center; font-size: 1.4rem !important;" class="white d-flex" (click)="backk()">
+          <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+          </svg>
+      </div>
+  
+      <div class="ml-4">
+        <a class="navbar-brand white RobotoS anim" href="#">Elegí la competición</a>
+      </div>
+
+    </nav>
+  
+    <div class="d-flex flex-column bg-oscuro2" style="padding-top: 10vh !important; padding-bottom: 20vh !important; min-height: 100vh !important;" >
+       <div class="d-flex justify-content-center box1" #ref id="{{liga.league_id}}" value="{{liga.name}}" (click)="rr(ref.id, ref.value)" *ngFor="let liga of ligas | orderby: 'name'" >
+        <a class="white RobotoS divs border-bottom">
+          {{liga.name}}
+        </a>
+      </div>
+    </div>
+
+  </div>
+  
+  
+  
+  <div *ngIf="isShow">
+  <div class="d-flex flex-column bg-oscuro2 pad">
+  
+    <nav class="navbar navbar-expand-lg bg-oscuro jc-normal" style="position: fixed !important; max-height:10vh !important ; border-bottom: 2px solid #ce1124 !important">      
+      <div style="align-items: center; font-size: 1.4rem !important;" class="white d-flex" (click)="rr(); rb()">
+          <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+          </svg>
+      </div>
+  
+      <div class="ml-4">
+        <a class="navbar-brand white RobotoS anim" href="#">{{nombre}}</a>
+      </div>
+    </nav>
+
+    <div class="anim" style="padding-top: 10vh !important; padding-bottom: 15vh !important;">
+
+      <div  class="d-flex white RobotoS justify-content-center" style="font-size: 25px !important; border-bottom: 2px solid #ffffff61; padding-bottom: 1rem;">
+        Próximos partidos
+      </div>
+  
+      <div class="ppj anim" style="margin-bottom: 6vh;" >
+          <div class="part RobotoS anim" *ngFor="let part of fixt"> <div class="fecha" *ngIf="part.score.fulltime">Final {{part.event_date | custom2Date}}</div> <div class="fecha" *ngIf="!part.score.fulltime" >{{part.event_date | customDate}}</div> <div class="equipo1">{{part.homeTeam.team_name}}</div> <div class="score">{{part.score.fulltime || '-'}}</div> <div class="equipo2">{{part.awayTeam.team_name}}</div></div>
+      </div>
+  
+      <div>
+  
+      <div class="pos1 anim" style="color: white !important; margin-bottom: 10vh;" *ngFor="let posi1 of stand">
+        <div class="pe titl RobotoS" style="margin-bottom: 0.75vh;"><div class="pos titl RobotoS">#</div> <div class="nombre titl RobotoS">Equipo</div> <div class="pts titl RobotoS">Pts.</div> <div class="pj titl RobotoS">PJ</div> <div class="ga titl RobotoS">GA</div> <div class="gc titl RobotoS">GC</div> <div class="dif titl RobotoS">DIF</div></div>
+        <div class="pe RobotoS anim" style="border-bottom: 1px solid #ffffff61; padding: 0.5vh 0vh;" *ngFor="let posi of posi1">
+          <div [ngClass]="{'posCh': posi.description === 'Promotion - Champions League (Group Stage)',
+                          'posEu': posi.description === 'Promotion - Europa League (Group Stage)',
+                          'posEu1': posi.description === 'Promotion - Europa Conference League (Qualification)',
+                          'posCh1': posi.description === 'Promotion - Bundesliga',
+                          'posEu1': posi.description === 'Promotion - Bundesliga (Promotion)',
+                          'posCh2': posi.description === 'Promotion - 2. Bundesliga',
+                          'posEu2': posi.description === 'Promotion - 2. Bundesliga (Promotion)',
+                          'posCh3': posi.description === 'Promotion',
+                          'posCh4': posi.description === 'Promotion Group',
+                          'posCh5': posi.description === 'Final Series',
+                          'posCh6': posi.description === 'Promotion - Champions League Women',
+                          'posEu4': posi.description === 'Promotion - Champions League Women (Qualification)',
+                          'posEu3': posi.description === 'Relegation Round',
+                          'posDes': posi.description === 'Bundesliga (Relegation)',
+                          'posDes1': posi.description === '2. Bundesliga (Relegation)',
+                          'posDes2': posi.description === 'Relegation - 2. Bundesliga',
+                          'posDes3': posi.description === 'Relegation - 3. Liga',
+                          'posDes4': posi.description === 'Relegation',
+                          'posDes5': posi.description === 'Relegation - 2. Bundesliga Women'
+        }" class="pos" >{{posi.rank}}</div> <div class="nombre">{{posi.teamName}}</div> <div class="pts">{{posi.points}}</div> <div class="pj">{{posi.all.matchsPlayed}}</div> <div class="ga">{{posi.all.goalsFor}}</div> <div class="gc">{{posi.all.goalsAgainst}}</div> <div class="dif">{{posi.goalsDiff}}</div>
+      </div>
+      </div>
+
+    </div>
+
+    </div>
+
+
+  </div>
+  </div>
+
+</div>
